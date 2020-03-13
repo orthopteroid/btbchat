@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">btbchat</string>
+    <string name="MainFragment">MainFragment</string>
+</resources>
