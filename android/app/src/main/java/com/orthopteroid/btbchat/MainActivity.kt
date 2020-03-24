@@ -56,7 +56,7 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
-        mAdapter = (this.applicationContext.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager)!!.adapter
+        mAdapter = (this.applicationContext.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager).adapter
 
         if (mAdapter!!.isEnabled)
             testBTPermissions()

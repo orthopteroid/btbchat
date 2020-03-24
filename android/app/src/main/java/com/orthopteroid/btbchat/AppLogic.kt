@@ -221,20 +221,17 @@ class AppLogic(activity: MainActivity, uiHandler: Handler) {
 
     fun pick_packet(m: Int) : Pickresult {
         while(srcpackets.isNotEmpty()) {
-            do {
-                val packet = srcpackets.pop()
-                if(!packet.valid_minute(m)) { if(debugmode) Log.i(TAG, "Skipping expired packet"); break }
-                return Pickresult(true, packet)
-            } while(false)
+            val packet = srcpackets.pop()
+            if(packet.valid_minute(m)) return Pickresult(true, packet)
+            if(debugmode) Log.i(TAG, "Skipping expired packet");
         }
 
-        var pp = Pripacket()
         while(meshpackets.isNotEmpty()) {
             var t0 = 0u
             val t1 = kotlin.random.Random.nextUInt(0u, pripacket_total)
-            var iter = meshpackets.listIterator()
+            val iter = meshpackets.listIterator()
             while(iter.hasNext()) {
-                pp = iter.next()
+                val pp = iter.next()
                 t0 += pp.priority
                 if(t0 >= t1) {
                     if(!pp.valid_minute(m)) { if(debugmode) Log.i(TAG, "Skipping expired packet"); break }
