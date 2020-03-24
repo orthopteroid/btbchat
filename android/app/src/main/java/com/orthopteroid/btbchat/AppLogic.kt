@@ -268,11 +268,14 @@ class AppLogic(activity: MainActivity, uiHandler: Handler) {
     // spurious wakeup workaround
     // this used to be a problem with java on linux but not java on windows
     fun ThreadSleep(delay: Int) {
-        val expire: Long = delay as Long + System.currentTimeMillis()
+        val quant = 10 // time quantum / tolerance
+        var t = System.currentTimeMillis()
+        val expire: Long = delay.toLong() + t
         while(true) {
-            val remaining = expire - System.currentTimeMillis()
-            if (remaining <= 25) break // <25ms remainder is probably pointless
+            val remaining = expire - t
+            if (remaining <= quant) break // done on v.small delays or when past deadine
             Thread.sleep(remaining)
+            t = System.currentTimeMillis()
         }
     }
 
