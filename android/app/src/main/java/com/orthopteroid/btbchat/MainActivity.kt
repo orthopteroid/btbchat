@@ -22,6 +22,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import kotlin.math.roundToInt
 
 @kotlin.ExperimentalStdlibApi
 @kotlin.ExperimentalUnsignedTypes
@@ -137,8 +138,10 @@ class MainActivity : AppCompatActivity() {
         val etext = findViewById<EditText>(R.id.editText) as EditText
         etext.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View?) {
-                if (etext.text.toString().isNotEmpty()) {
-                    mAppLogic?.mLocalText?.addLast(etext.text.toString())
+                val txt = etext.text.toString()
+                if (txt.isNotEmpty()) {
+                    AddWindowText(txt, (Math.random() * 0xFF).roundToInt()) // todo: pick color?
+                    mAppLogic?.mLocalText?.addLast(txt)
                     etext.text.clear()
                 }
             }
